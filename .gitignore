@@ -1,5 +1,6 @@
 # Generated files
 .tmp/
+config/webhook/k8s/.gencerts
 Dockerfile.cross
 
 .secretdata/

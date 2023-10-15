@@ -4,18 +4,35 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 resources:
   - ../base/
 
-
 generatorOptions:
   disableNameSuffixHash: true
 
 secretGenerator:
-  # generate a tls Secret
+  # generate a server certificate Secret
   - name: webhook-server-cert
     files:
-      - ./certs/tls.crt
-      - ./certs/tls.key
+      - .gencerts/tls.crt
+      - .gencerts/tls.key
+    type: "kubernetes.io/tls"
+  # generate a client caBundle Secret
+  - name: webhook-ca-bundle
+    files:
+      - .gencerts/ca.key
     type: "kubernetes.io/tls"
 
-patchesStrategicMerge:
-  - webhookcainjection_patch.yaml
+# put caBundle to Webhook
+replacements:
+  - source:
+      kind: Secret
+      name: webhook-ca-bundle
+      fieldPath: data.ca\.key
+    targets:
+      - select:
+          name: mutating-webhook-configuration
+        fieldPaths:
+          - webhooks.[name=mremotesecret.kb.io].clientConfig.caBundle
+
+
+#patchesStrategicMerge:
+#  - webhookcainjection_patch.yaml
 

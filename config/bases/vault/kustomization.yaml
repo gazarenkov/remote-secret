@@ -6,3 +6,14 @@ resources:
 
 patches:
   - path: operator-vault-patch.yaml
+
+configMapGenerator:
+  - name: controller-manager-environment-config
+    behavior: replace
+    literals:
+      - TOKENSTORAGE=vault
+    envs:
+      - .genenv/vault.env
+    options:
+      disableNameSuffixHash: true
+

@@ -10,7 +10,7 @@ resources:
 generatorOptions:
   disableNameSuffixHash: true
 
-secretGenerator:
-  - name: shared-configuration-file
-    files:
-      - config.yaml
+#secretGenerator:
+#  - name: shared-configuration-file
+#    files:
+#      - config.yaml

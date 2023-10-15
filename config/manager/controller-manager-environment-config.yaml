@@ -3,6 +3,4 @@ kind: ConfigMap
 metadata:
   name: controller-manager-environment-config
 data:
-  VAULTHOST: ${VAULT_HOST}
-  TOKENSTORAGE: vault
   ENABLEREMOTESECRETS: "true"
